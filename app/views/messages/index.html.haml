@@ -1,0 +1,37 @@
+.wrapper
+  .chat-side
+    .side-header
+      .side-header__box
+        %p.side-header__box__user-name katsu
+        %ul.side-header__box__menu
+          %li.side-header__box__menu__new-group
+          = link_to "#" do
+            -# %i.fa.fa-edit
+            =fa_icon 'edit', class: "contents__btn--icon"
+          %li.side-header__box__menu__edit-user
+          = link_to "#" do
+            -# %i.fa.fa-cog
+            =fa_icon 'cog', class: "contents__btn--icon"
+    .groups
+      .group 
+        %p.group__group-name チャットスペースグループ①
+        %p.group__latest-message fff
+  .chat-main
+    .main-header
+      .main-header__left-box
+        %h2.main-header__left-box__current-group  チャットスペースグループ①
+        %ul.main-header__left-box__member-list 
+          Member :
+          %li.main-header__left-box__member-list
+            koki
+      =link_to "#", class: "main-header__edit-btn" do
+        Edit
+    .messages
+    .form
+      %form.new_message{id: "new_message", enctype: "multipart/form-data", action: "/", method: "post"}
+        .input-box
+          %input.input-box__text{placeholder: "type a message",name: "message[content]",id: "message_content"}
+            %label.input-box__image{for: "message_image"}
+              %i.fa.fa-image
+              %input.input-box__image__file{type: "file", name: "datafile", id: "message_image", style: "display:none;"}
+        %input.submit-btn{type: "submit", value: "Send", name: "commit", "data-disable-with": "Send"}
