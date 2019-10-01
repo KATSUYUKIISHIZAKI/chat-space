@@ -1,0 +1,158 @@
+$font-color: #FFF;
+$chat-side-color: #2f3e51;
+$side-head-color: #253141;
+$chat-side-width: 300px;
+$chat-side-height: 100px;
+$main-header-height: 100px;
+$form-height: 90px;
+
+* {
+  box-sizing: border-box;
+}
+
+.chat-side {
+  height: 100%;
+  width: $chat-side-width;
+  background-color: $chat-side-color;
+  overflow: scroll;
+  float: left;
+}
+
+.side-header{
+  background-color: $side-head-color;
+  height: $chat-side-height;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  clear: both;
+  &__box{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-weight: bold;
+    color: $font-color;
+    text-decoration: none;
+    &__menu{
+      display: flex;
+    }
+  }
+}
+
+.contents__btn--icon{
+  color: $font-color;
+  margin-right: 5px;
+}
+
+.groups{
+  height: calc(100vh - #{$chat-side-height});
+  padding: 20px 20px 0;
+  overflow: scroll;
+}
+
+.group{
+  margin-bottom: 40px;
+  &__group-name{
+  font-size: 15px;
+  margin-bottom: 5px;
+  color: $font-color;
+  }
+  &__latest-message {
+    font-size: 11px;
+    color:$font-color;
+  }
+}
+
+.chat-main{
+  width: calc(100% - #{$chat-side-width});
+  float: right;
+  height: 100vh;
+  position: relative;
+}
+
+.main-header{
+  height: $main-header-height;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #eee;
+  overflow: scroll;
+  &__left-box{
+    margin-top: 35px;
+    &__current-group{
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    &__member-list{
+      display: inline-block;
+      font-size: 12px;
+      color: #999999;
+      &__member{
+        display: inline-block;
+      }
+    }
+  }
+  &__edit-btn{
+    height: 40px;
+    line-height: 40px;
+    padding: 0 20px;
+    margin-top: 30px;
+    border: solid 1px #38aef0;
+    position: absolute;
+    right: 40px;
+    text-decoration: none;
+    color: #38aef0;
+  }
+}
+
+.messages{
+  height: calc(100vh - #{$main-header-height} - #{$form-height});
+  padding: 46px 40px;
+  background-color: #fafafa;
+  overflow: scroll;
+}
+.form{
+  height: $form-height;
+  padding: 20px 40px;
+  background-color: #ddd;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.new_message{
+  display: flex;
+}
+
+.input-box{
+  position: relative;
+  width: 100%;
+  &__text{
+    height: 50px;
+    width: 100%;
+    padding: 0 40px 0 10px;
+    color: #434a54;
+    border-style: none;
+    display: flex;
+  }
+  &__image{
+    display: inline-block;
+    font-size: 1.3rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
+.fa-image{
+  color:#000;
+}
+
+.submit-btn{
+  width: 100px;
+  height: 50px;
+  padding: 0 30px;
+  margin-left: 15px;
+  background-color: #38aef0;
+  color: $font-color;
+  cursor: pointer;
+}
