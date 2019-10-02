@@ -31,7 +31,6 @@ $form-height: 90px;
     width: 100%;
     font-weight: bold;
     color: $font-color;
-    text-decoration: none;
     &__menu{
       display: flex;
     }
@@ -50,11 +49,12 @@ $form-height: 90px;
 }
 
 .group{
+  text-decoration: none;
   margin-bottom: 40px;
   &__group-name{
-  font-size: 15px;
-  margin-bottom: 5px;
-  color: $font-color;
+    font-size: 15px;
+    margin-bottom: 5px;
+    color: $font-color;
   }
   &__latest-message {
     font-size: 11px;
