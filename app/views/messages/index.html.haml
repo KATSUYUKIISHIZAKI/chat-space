@@ -2,43 +2,40 @@
   .chat-side
     .side-header
       .side-header__box
-        %p.side-header__box__user-name katsu
+        %p.side-header__box__user-name 
+          =current_user.name
         %ul.side-header__box__menu
           %li.side-header__box__menu__new-group
-          = link_to "#" do
-            -# %i.fa.fa-edit
+          = link_to new_group_path do
             =fa_icon 'edit', class: "contents__btn--icon"
           %li.side-header__box__menu__edit-user
-          = link_to "#" do
-            -# %i.fa.fa-cog
+          = link_to edit_user_path(current_user) do
             =fa_icon 'cog', class: "contents__btn--icon"
     .groups
       .group 
-        %p.group__group-name チャットスペースグループ①
-        %p.group__latest-message fff
+        %p.group__group-name 
+          =@group.name
+        %p.group__latest-message
+          = @group.show_last_message
   .chat-main
     .main-header
       .main-header__left-box
-        %h2.main-header__left-box__current-group  チャットスペースグループ①
+        %h2.main-header__left-box__current-group  
+          =@group.name
         %ul.main-header__left-box__member-list 
-          Member :
-          %li.main-header__left-box__member-list
-            katsu
-      =link_to "#", class: "main-header__edit-btn" do
+          = "Member :"
+          - @group.users.each do |user|
+            %li.main-header__left-box__member-list
+              = user.name
+      =link_to edit_group_path(@group), class: "main-header__edit-btn" do
         Edit
     .messages
+      = render partial: 'message', collection: @messages
     .form
-      %.form
-      = form_for [@group, @message] do |f|
-        = f.text_field :content, class: 'form__message', placeholder: 'type a message'
-        .form__mask
-          = f.label :image, class: 'form__mask__image' do
-            = fa_icon 'picture-o', class: 'icon'
-            = f.file_field :image, class: 'hidden'
-        = f.submit 'Send', class: 'form__submit'
+      = form_for [@group, @message], html: {class: "new_message", id: "new_message", name: "new_message" } do |f|
         .input-box
-          %input.input-box__text{placeholder: "type a message",name: "message[content]",id: "message_content"}
-            %label.input-box__image{for: "message_image"}
-              %i.fa.fa-image
-              %input.input-box__image__file{type: "file", name: "datafile", id: "message_image", style: "display:none;"}
-        %input.submit-btn{type: "submit", value: "Send", name: "commit", "data-disable-with": "Send"}
+          = f.text_field :content, class: 'input-box__text', placeholder: 'type a message'       
+          = f.label :image, for: "message_image", class: 'input-box__image' do
+            = fa_icon 'picture-o', class: 'fa_image'
+            = f.file_field :image, class: 'input-box__image__file', id: "message_image", style: "display:none;"
+        = f.submit 'Send', class: 'submit-btn'
