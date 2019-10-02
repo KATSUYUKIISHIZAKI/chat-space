@@ -28,7 +28,14 @@
         Edit
     .messages
     .form
-      %form.new_message{id: "new_message", enctype: "multipart/form-data", action: "/", method: "post"}
+      %.form
+      = form_for [@group, @message] do |f|
+        = f.text_field :content, class: 'form__message', placeholder: 'type a message'
+        .form__mask
+          = f.label :image, class: 'form__mask__image' do
+            = fa_icon 'picture-o', class: 'icon'
+            = f.file_field :image, class: 'hidden'
+        = f.submit 'Send', class: 'form__submit'
         .input-box
           %input.input-box__text{placeholder: "type a message",name: "message[content]",id: "message_content"}
             %label.input-box__image{for: "message_image"}
