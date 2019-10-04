@@ -38,7 +38,7 @@
       -#       %input.input-box__image__file{type: "file", name: "datafile", id: "message_image", style: "display:none;"}
       -#   %input.submit-btn{type: "submit", value: "Send",name: "commit", "data-disable-with": "Send"}
       
-      = form_for [@group, @message], html: {class: "new_message", id: "new_message" } do |f|
+      = form_for [@group, @message], html: {class: "new_message", id: "new_message", name: "new_message" } do |f|
         .input-box
           = f.text_field :content, class: 'input-box__text', placeholder: 'type a message'       
           = f.label :image, for: "message_image", class: 'input-box__image' do
