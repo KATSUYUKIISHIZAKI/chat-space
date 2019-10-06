@@ -32,6 +32,17 @@
     .messages
       = render partial: 'message', collection: @messages
     .form
+<<<<<<< HEAD
+=======
+      -# %form.new_message{id: "new_message", enctype: "multipart/form-data", action: "/", method: "post"}
+      -#   .input-box
+      -#     %input.input-box__text{placeholder: "type a message",name: "message[content]",id: "message_content"}
+      -#     %label.input-box__image{for: "message_image"}
+      -#       %i.fa.fa-image
+      -#       %input.input-box__image__file{type: "file", name: "datafile", id: "message_image", style: "display:none;"}
+      -#   %input.submit-btn{type: "submit", value: "Send",name: "commit", "data-disable-with": "Send"}
+      
+>>>>>>> parent of 57c7483... Revert "Merge pull request #6 from KATSUYUKIISHIZAKI/Asynchronous-message-sending-function-ver2"
       = form_for [@group, @message], html: {class: "new_message", id: "new_message", name: "new_message" } do |f|
         .input-box
           = f.text_field :content, class: 'input-box__text', placeholder: 'type a message'       
