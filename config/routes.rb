@@ -5,8 +5,4 @@ Rails.application.routes.draw do
   resources :groups, only: [:new, :create, :edit, :update] do
     resources :messages, only: [:index, :create]
   end
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of b7a2af7... Merge pull request #5 from KATSUYUKIISHIZAKI/Asynchronous-message-sending-function
 end
