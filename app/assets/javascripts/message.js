@@ -31,8 +31,9 @@ $(function(){
       data: formData,
       dataType: 'json',
       processData: false,
-      contentType: false,
+      contentType: false
     })
+    
     .done(function(message){
       var html = buildMessage(message);
       $('.messages').append(html)
@@ -40,6 +41,7 @@ $(function(){
       $('.submit-btn').removeAttr('disabled');
       $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight});
     })
+   
     .fail(function(){
       alert('error');
     })

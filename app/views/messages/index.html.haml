@@ -16,7 +16,7 @@
       .group 
         %p.group__group-name 
           チャットスペースグループ①
-        %p.group__latest-message sample
+        %p.group__latest-message fff
   .chat-main
     .main-header
       .main-header__left-box
@@ -44,4 +44,4 @@
           = f.label :image, for: "message_image", class: 'input-box__image' do
             = fa_icon 'picture-o', class: 'fa_image'
             = f.file_field :image, class: 'input-box__image__file', id: "message_image", style: "display:none;"
-        = f.submit 'Send', class: 'submit-btn'
+        = f.submit 'Send', class: 'submit-btn' 
