@@ -16,5 +16,3 @@
 # Ignore Byebug command history file.
 .byebug_history
 public/uploads/*
-app/assets/stylesheets/application.scss
-app/assets/stylesheets/application.scss
