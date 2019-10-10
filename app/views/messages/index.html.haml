@@ -10,15 +10,17 @@
             -# %i.fa.fa-edit
             =fa_icon 'edit', class: "contents__btn--icon"
           %li.side-header__box__menu__edit-user
-          = link_to edit_user_path(current_user) do
+          = link_to edit_user_path(@group) do
             -# %i.fa.fa-cog
             =fa_icon 'cog', class: "contents__btn--icon"
+   
     .groups
       .group 
         %p.group__group-name 
           =@group.name
         %p.group__latest-message
           = @group.show_last_message
+  
   .chat-main
     .main-header
       .main-header__left-box
@@ -27,25 +29,17 @@
         %ul.main-header__left-box__member-list 
           = "Member : "
           - @group.users.each do |user|
-            %li.main-header__left-box__member-list
-              = user.name
-          -#  %li.main-header__left-box__member-list
-            -# =group_user.user.name
+            %li.main-header__left-box__member-list 
+            = user.name 
+
       =link_to edit_group_path(@group), class: "main-header__edit-btn" do
         Edit
+    
     .messages
       = render partial: 'message', collection: @messages
+    
     .form
-      -# %form.new_message{id: "new_message", enctype: "multipart/form-data", action: "/", method: "post"}
-      -#   .input-box
-      -#     %input.input-box__text{placeholder: "type a message",name: "message[content]",id: "message_content"}
-      -#     %label.input-box__image{for: "message_image"}
-      -#       %i.fa.fa-image
-      -#       %input.input-box__image__file{type: "file", name: "datafile", id: "message_image", style: "display:none;"}
-      -#   %input.submit-btn{type: "submit", value: "Send",name: "commit", "data-disable-with": "Send"}
-      
       = form_for [@group, @message], html: {class: "new_message", id: "new_message", name: "new_message" } do |f|
-        
         .input-box
           = f.text_field :content, class: 'input-box__text', placeholder: 'type a message'       
           = f.label :image, for: "message_image", class: 'input-box__image' do
