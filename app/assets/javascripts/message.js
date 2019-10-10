@@ -1,31 +1,26 @@
 $(function(){
-  function buildMessage(message){
-    var img = message.image ? `<img src="${message.image}">` : "";
+  function buildHTML(message){
+    
+    var image = message.image.url ? `<img class="message__image" src="${message.image.url}">`: "";
     var html = `<div class="message">
-                  <div class="upper-message">
-                    <div class="upper-message__user-name">
-                      ${message.user}
-                    </div>
-                    <div class="upper-message__date">
-                      ${message.date}
-                    </div>
-                    </div>
-                    <div class="lower-message">
-                      <p class="lower-message__content">
-                        ${message.content}<br>  
-                        ${ img }
-                      </p>
-                     </div>
-                   </div>
-                 </div>`
+                  <div class="message__user">
+                    ${message.user_name}
+                  <div class="message__user__date"></div>
+                    ${message.date}
+                  </div>
+                  <div class="message__text">
+                  <p class="message__content">
+                    ${message.content}
+                  </p>
+                  ${image}
+                  </div>
+                </div>`
     return html;
   }
   $('#new_message').on('submit', function(e){
     e.preventDefault();
     var formData = new FormData(this);
-    var url = $(this).attr('action');
-    console.log(url);
-    
+    var url = (window.location.href);
     $.ajax({
       url: url,
       type: "POST",
@@ -34,15 +29,19 @@ $(function(){
       processData: false,
       contentType: false
     })
-    .done(function(message){
-      var html = buildMessage(message);
-      $('.messages').append(html)
-      document.new_message.reset();
-      $('.submit-btn').removeAttr('disabled');
-      $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight});
+
+    .done(function(data){
+      $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
+      var html = buildHTML(data);
+      $('.messages').append(html);
+      $('form')[0].reset();
+
     })
-    .fail(function(){
+    .fail(function(data){
       alert('error');
     })
+    .always(function(data){
+      $('.send-btn').prop('disabled', false);
+    })
   })
-});
+})
