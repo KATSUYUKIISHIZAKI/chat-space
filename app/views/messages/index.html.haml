@@ -7,11 +7,9 @@
         %ul.side-header__box__menu
           %li.side-header__box__menu__new-group
           = link_to new_group_path do
-            -# %i.fa.fa-edit
             =fa_icon 'edit', class: "contents__btn--icon"
           %li.side-header__box__menu__edit-user
           = link_to edit_user_path(@group) do
-            -# %i.fa.fa-cog
             =fa_icon 'cog', class: "contents__btn--icon"
    
     .groups

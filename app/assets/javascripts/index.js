@@ -27,8 +27,8 @@ $(document).on('turbolinks:load', function(){
                 </div>`
     memberslist.append(html);
   }
-   
-  $("#user-search-field").on("keyup", function(){
+    
+    $("#user-search-field").on("keyup", function(){
       var input = $("#user-search-field").val();
       
       $.ajax({

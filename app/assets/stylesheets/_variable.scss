@@ -110,7 +110,34 @@ $form-height: 90px;
   padding: 46px 40px;
   background-color: #fafafa;
   overflow: scroll;
+  .message {
+    padding-bottom: 40px;
+    &__upper-info {
+      display: flex;
+      margin-bottom: 10px;
+      &__talker {
+        color: $black;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      &__date {
+        color: $light_gray;
+        font-size: 12px;
+        margin-left: 10px;
+      }
+    }
+    &__text {
+      color: $black;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .lower-message__content {
+      margin-bottom:10px;
+    }
+  }
 }
+
+
 .form{
   height: $form-height;
   padding: 20px 40px;
