@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -41,11 +41,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'capistrano'
-  gem 'capistrano-rbenv'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-  gem 'capistrano3-unicorn'
+
 end
 
 group :development do
@@ -59,14 +55,17 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'haml-rails'
+# gem 'activesupport', '~> 5.2', '>= 5.2.3'
 gem "font-awesome-rails"
+gem "haml-rails"
+gem 'erb2haml'
 gem 'devise'
+gem 'pry-byebug'
 gem 'carrierwave'
-gem 'fog-aws'
 gem 'mini_magick'
 gem 'pry-rails'
 
+
 group :production do
   gem 'unicorn', '5.4.1'
-end
+end 
