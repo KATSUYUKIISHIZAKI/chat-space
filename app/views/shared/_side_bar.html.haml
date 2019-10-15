@@ -1,3 +1,4 @@
+
 .chat-side
   .side-header
     %h3.side-header__box
@@ -14,8 +15,7 @@
     - current_user.groups.each do |group|
       .group
         = link_to group_messages_path(group) do
-          .group__box 
-           .group__group-name
-             = group.name
-           .group__latest-message
-             = group.show_last_message 
+          .group__group-name
+            = group.name
+          .group__latest-message
+            = group.show_last_message
