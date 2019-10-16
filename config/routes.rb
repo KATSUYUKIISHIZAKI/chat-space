@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :edit, :update]
   resources :groups, only: [:create, :edit, :update, :new] do
     resources :messages, only: [:index, :create]
- 
+
     namespace :api do
       resources :messages, only: :index, defaults:{format: 'json'}
     end
