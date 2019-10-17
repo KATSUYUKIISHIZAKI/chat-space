@@ -26,6 +26,7 @@ timeout 60
 
 preload_app true
 GC.respond_to?(:copy_on_write_friendly=) && GC.copy_on_write_friendly = true
+
 check_client_connection false
 
 run_once = true
@@ -33,11 +34,11 @@ run_once = true
 before_fork do |server, worker|
   defined?(ActiveRecord::Base) &&
     ActiveRecord::Base.connection.disconnect!
-  
-    if run_once
+
+  if run_once
     run_once = false # prevent from firing again
   end
-  
+
   old_pid = "#{server.config[:pid]}.oldbin"
   if File.exist?(old_pid) && server.pid != old_pid
     begin
