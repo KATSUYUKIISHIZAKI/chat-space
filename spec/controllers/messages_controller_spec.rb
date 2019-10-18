@@ -4,7 +4,7 @@ RSpec.describe MessagesController, type: :controller do
   let(:group) { create(:group) }
   let(:user) { create(:user) }
 
-  describe "GET #index" do
+  describe "get#index" do
     context "log in" do
       before do
         login_user(user)
@@ -35,7 +35,7 @@ RSpec.describe MessagesController, type: :controller do
     end
   end
 
-    describe "Post #crate" do
+    describe "post#crate" do
     let(:params) { { group_id: group.id, user_id: user.id, message: attributes_for(:message) } }
 
     context "log in" do
