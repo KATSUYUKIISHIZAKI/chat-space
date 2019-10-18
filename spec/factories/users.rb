@@ -1,4 +1,4 @@
-FactoryGirl.define do
+Factorybot.define do
 
   factory :user do
     password = Faker::Team.name
