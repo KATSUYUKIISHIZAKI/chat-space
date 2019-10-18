@@ -1,2 +1,10 @@
-.side-content
-  = render partial: "layouts/side_bar"
+%nav.chat-nav
+  .chat-nav__header
+    .chat-nav__header__user= current_user.name
+    .chat-nav__header__icon
+      = link_to edit_user_path(current_user), class: "chat-nav__header__icon__user-update" do
+        %i.fas.fa-cog
+      = link_to new_group_path(current_user), class: "chat-nav__header__icon__group-addition" do
+        %i.fas.fa-edit
+  %ul.chat-nav__group
+    = render partial: "partial/group_list"
