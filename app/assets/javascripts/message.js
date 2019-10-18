@@ -1,74 +1,96 @@
-$(document).on('turbolinks:load', function(){  
-  function buildHTML(message){
+$(function () {
+  var groupId;
+  var groupUrl;
+  var latestMessage;
+  var latestMessageBody;
+  var messageContent;
+  var latestMessageId;
+  var intervalChangeFlag = [];
+  intervalChangeFlag.push(setIntervalMessage = setInterval(reloadMessages, 5000));
 
-    var image = message.image.url ? `<img class="message__image" src="${message.image.url}">`: "";
-
-    var html = `<div class="message" data-message-id= "${message.id}">
-                  <div class="message__user">
-                    ${message.user_name}
-                  <div class="message__user__date"></div>
-                    ${message.date}
+  function buildHTML(message) {
+    var messageBody = message.body ? message.body : "";
+    var messegeImage = message.image_url ? `<img src="${ message.image_url }">` : ``;
+    var html = `<li class="chat__body__list" id="message__${ message.message_id }">
+                  <span class="chat__body__list__user-name">${ message.user_name }</span>
+                  <span class="chat__body__list__creation-time">${ message.created_at }</span>
+                  <div class="chat__body__list__message">
+                    <div class="chat__body__list__message__body">${ messageBody }</div>
+                    ${ messegeImage }
                   </div>
-                  <div class="message__text">
-                  <p class="message__content">
-                    ${message.content}
-                  </p>
-                  ${image}
-                  </div>
-                </div>`
+                </li>`
     return html;
   }
 
-  $('#new_message').on('submit', function(e){
-  e.preventDefault();
+  $("#message-form").submit(function (e) {
+    e.preventDefault();
     var formData = new FormData(this);
-    var url = (window.location.href);
+    var url = $(this).attr("action");
+
     $.ajax({
       url: url,
       type: "POST",
       data: formData,
-      dataType: 'json',
+      dataType: "json",
       processData: false,
       contentType: false
     })
 
-    .done(function(data){
-      $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
-      var html = buildHTML(data);
-      $('.messages').append(html);
-      $('form')[0].reset();
+    .done(function (newMessage) {
+      // サイドメニュー（グループ）の最新メッセージ更新
+      var groupNewMessage = newMessage.body.length ? newMessage.body : "画像が投稿されています";
+      $("#group__" + newMessage.group_id + "> .chat-nav__group__list__new-message").html(groupNewMessage);
+      // 新規投稿メッセージ・イメージの追加
+      var html = buildHTML(newMessage);
+      $(".chat__body").append(html);
+      $(".chat__body").animate({ scrollTop: $(".chat__body")[0].scrollHeight }, "fast");
+    })
+
+    .fail(function () {
+      alert("error");
+    })
+
+    .always(function () {
+      $(".chat__footer__submit").removeAttr("disabled");
+      $("#message-form")[0].reset();
+    });
   })
 
-    .fail(function(data){
-    alert('メッセージを送信できません');
+  function reloadMessages() {
+    groupUrl = $(location).attr("href").match(/\/groups\/\d+\/messages/);
+    if (groupUrl !== null) {
+      groupId = groupUrl[0].match(/\d+/);
+      latestMessageId = $(".chat__body > li").length ? $(".chat__body > li:last-child").attr("id").replace(/message__/, "") : "";
+
+      $.ajax({
+        url: groupUrl[0],
+        type: "GET",
+        data: {
+          group_id         : groupId[0],
+          latest_message_id: latestMessageId
+        },
+        dataType: "json"
       })
 
-    .always(function(data){
-    $('.send-btn').prop('disabled', false);
-    })
-  });
-
-  var reloadMessages = function(){
-    if (window.location.href.match(/\/groups\/\d+\/messages/)){
-    var last_message_id = $('.message').last().data("message-id");
-    $.ajax({
-      url: "api/messages",
-      type: 'GET',
-      dataType: 'json',
-      data: {id: last_message_id}
-    })
-    .done(function(messages){
-      var insertHTML = ''; //追加するHTMLの入れ物を作る
-      messages.forEach(function(message){  //配列messagesの中身一つ一つを取り出し、HTMLに変換したものを入れ物に足し合わせる
-        insertHTML = buildHTML(message); //メッセージが入ったHTMLを取得
-        $('.messages').append(insertHTML); //メッセージを追加
+      .done(function (messages) {
+        if (messages.length) {
+          // サイドメニュー（グループ）の最新メッセージ更新
+          latestMessageBody = messages[messages.length - 1].body;
+          latestMessage = latestMessageBody.length ? latestMessageBody : "画像が投稿されています";
+          $("#group__" + groupId[0] + "> .chat-nav__group__list__new-message").html(latestMessage);
+          // 最新メッセージ・イメージの追加
+          messages.forEach(function (message) {
+            messageContent = buildHTML(message);
+            $(".chat__body").append(messageContent);
+          });
+          $(".chat__body").animate({ scrollTop: $(".chat__body")[0].scrollHeight }, "fast");
+        }
       })
-      $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
-    })
-    .fail(function(){
-      alert('error');
-      });
+
+      .fail(function () {
+        clearInterval(intervalChangeFlag.shift());
+        alert("メッセージの自動更新ができませんでした");
+      })
     }
-  };
-    setInterval(reloadMessages, 5000);
-});
+  }
+})
