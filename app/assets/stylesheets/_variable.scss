@@ -1,2 +1,18 @@
-$white: #FFFFFF !default;
-$blue: rgb(56, 174, 240) !default;
+// 共通で使用する変数
+$font--white: #FFF;
+$font--dark : #434A54;
+$blue       : #38AEF0;
+$orange     : #F35500;
+
+// .alertと.main__height-adjustmentで使用する変数
+$alert-height: 30px;
+
+// .chat-navで使用する変数
+$chat-nav__header-height   : 100px;
+$chat-nav__padding--lateral: 20px;
+$chat-nav__back-color      : #2F3E51;
+
+// .chatで使用する変数
+$chat__padding--lateral: 40px;
+$chat__header-height   : 100px;
+$chat__footer-height   : 90px;
