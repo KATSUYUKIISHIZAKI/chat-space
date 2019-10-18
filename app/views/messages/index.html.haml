@@ -1,24 +1,27 @@
-.wrapper
-.side-content
-  = render partial: "layouts/side_bar"
-.main-content
-  .main-header
-    .main-box
-      .main-box__group-name
-        = @group.name
-      .main-box__member-list
-        - @group.users.each do |menber|
-          = menber.name
-    %label.main__edit-btn
-      = link_to edit_group_path(@group) do
-        Edit
-  .messages
-    = render @messages
-  .form
-    .form__box
-      = form_for [@group, @message] do |f|
-        = f.text_field :content, class: 'message-box', placeholder: 'type a message'
-        = f.label :image, class: 'message-box__image' do
-          = fa_icon 'image', class: 'hidden'
-          = f.file_field :image, class: 'message-box__image__file'
-        = f.submit 'Send', class: 'submit-btn'
+%nav.chat-nav
+  .chat-nav__header
+    .chat-nav__header__user= current_user.name
+    .chat-nav__header__icon
+      = link_to edit_user_path(current_user), class: "chat-nav__header__icon__user-update" do
+        %i.fas.fa-cog
+      = link_to new_group_path(current_user), class: "chat-nav__header__icon__group-addition" do
+        %i.fas.fa-edit
+  %ul.chat-nav__group
+    = render partial: "partial/group_list"
+
+.chat
+  .chat__header
+    .chat__header__group-info
+      .chat__header__group-info__name= @group.name
+      .chat__header__group-info__member= "Menbers: #{@members}"
+    = link_to "Edit", edit_group_path(@group.id), class: "chat__header__group-edit-btn"
+  .chat__body
+    = render partial: "partial/chat_messages", collection: @messages, as: "message"
+  = form_for [@group, @message], html: { id: "message-form", class: "chat__footer" } do |f|
+    .chat__footer__message
+      = f.text_field :body, class: "chat__footer__message__area", placeholder: "type a message"
+      = f.label :image, class: "chat__footer__message__image" do
+        %i.far.fa-image.fa-lg
+        = f.file_field :image, class: "chat__footer__message__image__file"
+    = f.submit "Send", class: "chat__footer__submit"
+    = f.button "リセット", type: :reset, style: "display: none;"
