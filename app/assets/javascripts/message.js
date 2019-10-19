@@ -1,96 +1,76 @@
-$(function () {
-  var groupId;
-  var groupUrl;
-  var latestMessage;
-  var latestMessageBody;
-  var messageContent;
-  var latestMessageId;
-  var intervalChangeFlag = [];
-  intervalChangeFlag.push(setIntervalMessage = setInterval(reloadMessages, 5000));
-
-  function buildHTML(message) {
-    var messageBody = message.body ? message.body : "";
-    var messegeImage = message.image_url ? `<img src="${ message.image_url }">` : ``;
-    var html = `<li class="chat__body__list" id="message__${ message.message_id }">
-                  <span class="chat__body__list__user-name">${ message.user_name }</span>
-                  <span class="chat__body__list__creation-time">${ message.created_at }</span>
-                  <div class="chat__body__list__message">
-                    <div class="chat__body__list__message__body">${ messageBody }</div>
-                    ${ messegeImage }
-                  </div>
-                </li>`
+$(function() {
+  
+  function buildHTML(message){
+    image = ( message.image ) ? `<img class= "lower-message__image" src=${message.image} >` : "";
+  	  var html =
+  	    `<div class="main__message__box" data-message-id= "${message.id}">
+          <div class="main__message__box__top">
+            <div class="main__message__box__top__name">
+              ${message.user_name}
+            </div>
+            <div class="main__message__box__top__time">
+              ${message.date}
+            </div>
+          </div>
+          <div class="main__message__box__text">
+            <p class="lower-message__content">
+              ${message.content}
+            </p>
+          </div>
+          ${image}
+        </div>`
     return html;
   }
+  
+  function ScrollToNewMessage(){
+    $('.main__message').animate({scrollTop: $('.main__message')[0].scrollHeight}, 'fast');
+  }
 
-  $("#message-form").submit(function (e) {
-    e.preventDefault();
+  $('#new_message').on('submit',function(e) {
+    e.preventDefault(); 
     var formData = new FormData(this);
-    var url = $(this).attr("action");
-
+    var url = $(this).attr('action');
     $.ajax({
       url: url,
       type: "POST",
       data: formData,
-      dataType: "json",
+      dataType: 'json',
       processData: false,
       contentType: false
     })
+	  .done(function(data){
+		  var html = buildHTML(data);
+	  	$('.main__message').append(html);
+      ScrollToNewMessage();
+	  	$('.main__footer__text').val('');
+	  	$(".main__footer__send-button").prop('disabled', false);
+	  })
+	  .fail(function(){
+	    alert('error');
+	  });
+  });
 
-    .done(function (newMessage) {
-      // サイドメニュー（グループ）の最新メッセージ更新
-      var groupNewMessage = newMessage.body.length ? newMessage.body : "画像が投稿されています";
-      $("#group__" + newMessage.group_id + "> .chat-nav__group__list__new-message").html(groupNewMessage);
-      // 新規投稿メッセージ・イメージの追加
-      var html = buildHTML(newMessage);
-      $(".chat__body").append(html);
-      $(".chat__body").animate({ scrollTop: $(".chat__body")[0].scrollHeight }, "fast");
+    var interval = setInterval(function(){
+      if (window.location.href.match(/\/groups\/\d+\/messages/)){
+        var last_message_id = $('.main__message__box').filter(":last").data('messageId')
+    $.ajax({
+      url: location.href.json,
+      data: { last_id: last_message_id },
+      type: "GET",
+      dataType: 'json'
     })
-
-    .fail(function () {
-      alert("error");
+    .done(function(data){
+      var insertHTML = '';
+      data.forEach(function(message){
+      insertHTML = buildHTML(message);         
+      $('.main__message').append(insertHTML)
+      ScrollToNewMessage();
+      });
     })
-
-    .always(function () {
-      $(".chat__footer__submit").removeAttr("disabled");
-      $("#message-form")[0].reset();
-    });
-  })
-
-  function reloadMessages() {
-    groupUrl = $(location).attr("href").match(/\/groups\/\d+\/messages/);
-    if (groupUrl !== null) {
-      groupId = groupUrl[0].match(/\d+/);
-      latestMessageId = $(".chat__body > li").length ? $(".chat__body > li:last-child").attr("id").replace(/message__/, "") : "";
-
-      $.ajax({
-        url: groupUrl[0],
-        type: "GET",
-        data: {
-          group_id         : groupId[0],
-          latest_message_id: latestMessageId
-        },
-        dataType: "json"
-      })
-
-      .done(function (messages) {
-        if (messages.length) {
-          // サイドメニュー（グループ）の最新メッセージ更新
-          latestMessageBody = messages[messages.length - 1].body;
-          latestMessage = latestMessageBody.length ? latestMessageBody : "画像が投稿されています";
-          $("#group__" + groupId[0] + "> .chat-nav__group__list__new-message").html(latestMessage);
-          // 最新メッセージ・イメージの追加
-          messages.forEach(function (message) {
-            messageContent = buildHTML(message);
-            $(".chat__body").append(messageContent);
-          });
-          $(".chat__body").animate({ scrollTop: $(".chat__body")[0].scrollHeight }, "fast");
-        }
-      })
-
-      .fail(function () {
-        clearInterval(intervalChangeFlag.shift());
-        alert("メッセージの自動更新ができませんでした");
-      })
-    }
-  }
-})
+    .fail(function(data){
+      alert('自動更新に失敗しました');
+    })
+  } else{
+      clearInterval(interval);
+    }} , 5000 )
+});
