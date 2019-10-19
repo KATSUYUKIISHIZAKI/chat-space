@@ -1,27 +1,41 @@
-%nav.chat-nav
-  .chat-nav__header
-    .chat-nav__header__user= current_user.name
-    .chat-nav__header__icon
-      = link_to edit_user_path(current_user), class: "chat-nav__header__icon__user-update" do
-        %i.fas.fa-cog
-      = link_to new_group_path(current_user), class: "chat-nav__header__icon__group-addition" do
-        %i.fas.fa-edit
-  %ul.chat-nav__group
-    = render partial: "partial/group_list"
-
-.chat
-  .chat__header
-    .chat__header__group-info
-      .chat__header__group-info__name= @group.name
-      .chat__header__group-info__member= "Menbers: #{@members}"
-    = link_to "Edit", edit_group_path(@group.id), class: "chat__header__group-edit-btn"
-  .chat__body
-    = render partial: "partial/chat_messages", collection: @messages, as: "message"
-  = form_for [@group, @message], html: { id: "message-form", class: "chat__footer" } do |f|
-    .chat__footer__message
-      = f.text_field :body, class: "chat__footer__message__area", placeholder: "type a message"
-      = f.label :image, class: "chat__footer__message__image" do
-        %i.far.fa-image.fa-lg
-        = f.file_field :image, class: "chat__footer__message__image__file"
-    = f.submit "Send", class: "chat__footer__submit"
-    = f.button "リセット", type: :reset, style: "display: none;"
+.wrapper
+  .chat-side
+    .side-header
+      .side-header__box
+        %p.side-header__box__user-name 
+          =current_user.name
+        %ul.side-header__box__menu
+          %li.side-header__box__menu__new-group
+          = link_to new_group_path do
+            =fa_icon 'edit', class: "contents__btn--icon"
+          %li.side-header__box__menu__edit-user
+          = link_to edit_user_path(current_user) do
+            =fa_icon 'cog', class: "contents__btn--icon"
+    .groups
+      .group 
+        %p.group__group-name 
+          =@group.name
+        %p.group__latest-message
+          = @group.show_last_message
+  .chat-main
+    .main-header
+      .main-header__left-box
+        %h2.main-header__left-box__current-group  
+          =@group.name
+        %ul.main-header__left-box__member-list 
+          = "Member :"
+          - @group.users.each do |user|
+            %li.main-header__left-box__member-list
+              = user.name
+      =link_to edit_group_path(@group), class: "main-header__edit-btn" do
+        Edit
+    .messages
+      = render partial: 'message', collection: @messages
+    .form
+      = form_for [@group, @message], html: {class: "new_message", id: "new_message", name: "new_message" } do |f|
+        .input-box
+          = f.text_field :content, class: 'input-box__text', placeholder: 'type a message'       
+          = f.label :image, for: "message_image", class: 'input-box__image' do
+            = fa_icon 'picture-o', class: 'fa_image'
+            = f.file_field :image, class: 'input-box__image__file', id: "message_image", style: "display:none;"
+        = f.submit 'Send', class: 'submit-btn'
