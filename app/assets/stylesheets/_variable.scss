@@ -1,18 +1,28 @@
-// 共通で使用する変数
-$font--white: #FFF;
-$font--dark : #434A54;
-$blue       : #38AEF0;
-$orange     : #F35500;
+$text-color: #434A54;
+$sub-text-color: #999999;
+$button-color: #38AEF0;
 
-// .alertと.main__height-adjustmentで使用する変数
-$alert-height: 30px;
+// フラッシュメッセージ用カラー定義
+$white: #fff;
+$side_blue_dark: #253141;
+$side_blue_light: #2f3e51;
+$light_blue: #38AEF0;
+$light_gray: #999;
+$black: #434a54;
+$alert_orange: #F35500;
 
-// .chat-navで使用する変数
-$chat-nav__header-height   : 100px;
-$chat-nav__padding--lateral: 20px;
-$chat-nav__back-color      : #2F3E51;
 
-// .chatで使用する変数
-$chat__padding--lateral: 40px;
-$chat__header-height   : 100px;
-$chat__footer-height   : 90px;
+
+@mixin side-p {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+@mixin side-w {
+  width: 300px;
+}
+
+@mixin main-p {
+  padding-right: 40px;
+  padding-left: 40px;
+}
