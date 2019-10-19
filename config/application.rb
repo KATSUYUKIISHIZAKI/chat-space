@@ -13,8 +13,8 @@ module ChatSpace
       g.javascripts false
       g.helper false
       g.test_framework false
-      config.i18n.default_locale = :ja # デフォルトのlocaleを日本語(:ja)にする
-      config.time_zone = 'Tokyo'
+      config.time_zone = 'Asia/Tokyo'
+      config.i18n.default_locale = :ja
     end
   end
 end
