@@ -1,8 +1,8 @@
 // 全体に関わるscssをインポート
 @import "./reset";
 @import "font-awesome";
-@import "config/variable";
-@import "mixin/mixin";
+@import "./variable";
+@import "./mixin";
 @import "modules/common";
 
 // 個別ビューに対応するscssをインポート
