@@ -48,9 +48,11 @@ $form-height: 90px;
   overflow: scroll;
 }
 
-.group{
-  text-decoration: none;
+.group {
   margin-bottom: 40px;
+  a{
+    text-decoration: none;
+  }
   &__group-name{
     font-size: 15px;
     margin-bottom: 5px;
@@ -110,7 +112,34 @@ $form-height: 90px;
   padding: 46px 40px;
   background-color: #fafafa;
   overflow: scroll;
+  .message {
+    padding-bottom: 40px;
+    &__upper-info {
+      display: flex;
+      margin-bottom: 10px;
+      &__talker {
+        color: #333;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      &__date {
+        color: #999999;
+        font-size: 12px;
+        margin-left: 10px;
+      }
+    }
+    &__text {
+      color: #333;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .lower-message__content {
+      margin-bottom:10px;
+    }
+  }
 }
+
+
 .form{
   height: $form-height;
   padding: 20px 40px;
@@ -155,4 +184,4 @@ $form-height: 90px;
   background-color: #38aef0;
   color: $font-color;
   cursor: pointer;
-} 
+}
