@@ -1,8 +1,8 @@
-s# server-based syntax
+# server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
-
+server '18.176.24.254', user: 'ec2-user', roles: %w{app db web}
 # server "example.com", user: "deploy", roles: %w{app db web}, my_property: :my_value
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
@@ -31,7 +31,7 @@ s# server-based syntax
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
-server '18.176.24.254', user: 'ec2-user', roles: %w{app db web}
+
 
 # Custom SSH Options
 # ==================
