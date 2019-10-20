@@ -58,7 +58,7 @@ RSpec.configure do |config|
   # the `--only-failures` and `--next-failure` CLI options. We recommend
   # you configure your source control system to ignore this file.
   config.example_status_persistence_file_path = "spec/examples.txt"
- 
+  
   # Limits the available syntax to the non-monkey patched syntax that is
   # recommended. For more details, see:
   #   - http://rspec.info/blog/2012/06/rspecs-new-expectation-syntax/
@@ -86,7 +86,7 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = :random
- 
+  
   # Seed global randomization in this process using the `--seed` CLI option.
   # Setting this allows you to use `--seed` to deterministically reproduce
   # test failures related to randomization by passing the same `--seed` value
