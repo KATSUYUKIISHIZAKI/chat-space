@@ -12,9 +12,9 @@ module ChatSpace
       g.stylesheets false
       g.javascripts false
       g.helper false
-      g.test_framework false
-      config.time_zone = 'Asia/Tokyo'
+      g.test_framework
       config.i18n.default_locale = :ja
+      config.time_zone = 'Tokyo'
     end
   end
 end
