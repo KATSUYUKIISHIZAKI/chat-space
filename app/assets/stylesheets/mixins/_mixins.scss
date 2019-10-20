@@ -1,0 +1,43 @@
+@mixin clear {
+  &after {
+    content: "";
+    display: block;
+    clear  : both;
+  }
+}
+
+@mixin justify-space-between {
+  display        : flex;
+  justify-content: space-between;
+}
+
+@mixin align-center {
+  display    : flex;
+  align-items: center;
+}
+
+@mixin hover($value: 15%) {
+  &:hover {
+    background-color: lighten($chat-nav__back-color, $value);
+    cursor          : pointer;
+  }
+}
+
+@mixin scroll-bar {
+  &::-webkit-scrollbar {
+    width           : 8px;
+    background-color: inherit;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius   : 8px;
+    box-shadow      : 0 0 0 1px rgba(255, 255, 255, .3);
+  }
+}
+
+@mixin scroll-bar-hidden {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
