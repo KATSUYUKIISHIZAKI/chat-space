@@ -9,12 +9,11 @@
       %li.side-header__box__menu__edit-user
         = link_to edit_user_path(current_user) do
           = fa_icon 'cog', class: 'contents__btn--icon'
-
   .groups
     - current_user.groups.each do |group|
       .group
         = link_to group_messages_path(group) do
           .group__group-name
             = group.name
-          .group__latest-message 
-            = group.show_last_message  
+          .group__latest-message
+            = group.show_last_message
