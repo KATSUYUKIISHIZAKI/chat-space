@@ -1,9 +1,7 @@
 class Api::MessagesController < ApplicationController
   def index
-    @messages = Message.all
-    respond_to do |format|
-      format.html
-      format.json { @new_messages = Message.where('id > ?', params[:id]) }
-    end
+    group = Group.find(params[:group_id])
+    last_message_id = params[:id].to_i
+    @messages = group.messages.includes(:user).where("id > #{last_message_id}")
   end
 end
