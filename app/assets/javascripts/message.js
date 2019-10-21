@@ -24,7 +24,7 @@ $(document).on("turbolinks:load", function () {
     var url = $(this).attr('action');
     
     $.ajax({
-      url: url,
+      url: location.href,
       type: "POST",
       data: formData,
       dataType: 'json',
@@ -68,5 +68,5 @@ $(document).on("turbolinks:load", function () {
       }  
     }
 
-  setInterval(reloadMessages, 5000);
+  setInterval(reloadMessages, 3000);
 });
