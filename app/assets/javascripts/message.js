@@ -1,25 +1,28 @@
-$(document).on('turbolinks:load', function() {
-  function buildHTML(message){
-    var image = message.image ? `<img src="${message.image}">` : ``
-    var html = `<ul class="main-block__user-name">
-                    ${message.user_name}
-                    <li class="main-block__user-name__time">
-                      ${message.created_at}
-                    </li>
-                  </ul>
-                  <div class="main-block__comments">
-                    <p>
-                      ${message.content}
+$(document).on("turbolinks:load", function () {
+  function buildMessage(message){
+    var img = message.image ? `<img src="${message.image}">` : "";
+    var html = `<div class="message" data-message-id="${message.id}">
+                  <div class="message__upper-info">
+                    <p class="message__upper-info__talker">
+                      ${message.user}
                     </p>
-                    ${image}
+                    <p class="message__upper-info__date">
+                      ${message.date}
+                    </p>
+                  </div>
+                  <p class="message__text">
+                    ${message.content}
+                  </p>
+                    ${img}
                   </div>`
     return html;
+  
   }
-
-  $('.new_message').on('submit', function(e){
+  $('#new_message').on('submit', function(e){
     e.preventDefault();
     var formData = new FormData(this);
-    var url = $(this).attr('action')
+    var url = $(this).attr('action');
+    
     $.ajax({
       url: url,
       type: "POST",
@@ -28,42 +31,42 @@ $(document).on('turbolinks:load', function() {
       processData: false,
       contentType: false
     })
-    .done(function(data){
-      var html = buildHTML(data);
-      $(".main").append(html)
-      $(".footer__framwork__input-box__form-message").val('')
-      $(".footer__framwork__form-submit").prop('disabled', false);
+    .done(function(message){
+      var html = buildMessage(message);
+      $('.messages').append(html)
+      document.new_message.reset();
+      $('.submit-btn').removeAttr('disabled');
+      $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight});
     })
     .fail(function(){
-      alert('失敗しました。');
+      alert('error');
     })
   })
 
-  $('document').ready(function(){
-    $(".main").animate({scrollTop:$('.footer__framwork')}, 500, 'swing');
-  })
+  
+    var reloadMessages = function() {
 
-  var reloadMessages = function(message) {
-    last_message_id = $("#blog")
-    group_id = $(".main-contents__header__block__group-name").data('group_id')
-    var url = `/groups/${group_id}/api/messages`
-    $.ajax({
-      url: url,
-      type: 'get',
-      dataType: 'json',
-      data: {id: last_message_id},
-      processData: false,
-      contentType: false
-    })
-    .done(function(messages) {
-      var insertHTML = '';
-      messages.forEach(function(message){
-        insertHTML += buildHTML(message);
-      })
-      $('.main').append(insertHTML)
-    })
-    .fail(function() {
-    });
-  };
-  setInterval(reloadMessages, 3000);
+      if (window.location.href.match(/\/groups\/\d+\/messages/)){
+        last_message_id = $('.message:last').data('message-id');
+        $.ajax({
+          url: 'api/messages#index {:format=>"json"}',
+          type: 'get',
+          dataType: 'json',
+          data: {id: last_message_id}
+        })
+        .done(function(messages) {
+          var insertHTML = '';
+          messages.forEach(function (message) {
+            insertHTML = buildMessage(message);
+            $('.messages').append(insertHTML);
+            $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight }, 'fast');
+          })
+        })
+        .fail(function() {
+          alert('自動更新に失敗しました。');
+        })
+      }  
+    }
+
+  setInterval(reloadMessages, 5000);
 });
