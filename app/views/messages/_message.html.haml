@@ -1,11 +1,10 @@
-.message
-  .upper-message
-    .upper-message__user-name
+.message{data: {"message-id": message.id}}
+  .message__upper-info
+    %p.message__upper-info__talker
       = message.user.name
-    .upper-message__date
+    %p.message__upper-info__date
       = message.created_at.strftime("%Y/%m/%d %H:%M")
-  .lower-message
+  %p.message__text
     - if message.content.present?
-      %p.lower-message__content
-        = message.content
-    = image_tag message.image.url, class: 'lower-message__image' if message.image.present?  
+      = message.content
+  = image_tag message.image.url, class: 'lower-message__image' if message.image.present?
