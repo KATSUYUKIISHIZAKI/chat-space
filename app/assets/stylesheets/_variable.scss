@@ -60,113 +60,6 @@ $form-height: 90px;
   }
   &__latest-message {
     font-size: 11px;
-    color: $font-color;
-  }
-}
-
-.chat-main{
-  width: calc(100% - #{$chat-side-width});
-  float: right;
-  height: 100vh;
-  position: relative;
-}
-
-.main-header{
-  height: $main-header-height;
-  padding: 0 40px;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: solid 1px #eeeeee;
-  overflow: scroll;
-  &__left-box{
-    margin-top: 35px;
-    &__current-group{
-      font-size: 20px;
-      color: #333;
-      margin-bottom: 15px;
-    }
-    &__member-list{
-      display: inline-block;
-      font-size: 12px;
-      color: #999999;
-      &__member{
-        display: inline-block;
-      }
-    }
-  }
-  &__edit-btn{
-    height: 40px;
-    line-height: 40px;
-    padding: 0 20px;
-    margin-top: 30px;
-    border: solid 1px #38aef0;
-    position: absolute;
-    right: 40px;
-    text-decoration: none;
-    color: #38aef0;
-  }
-}
-
-$font-color: #FFF;
-$chat-side-color: #2f3e51;
-$side-head-color: #253141;
-$chat-side-width: 300px;
-$chat-side-height: 100px;
-$main-header-height: 100px;
-$form-height: 90px;
-
-* {
-  box-sizing: border-box;
-}
-
-.chat-side {
-  height: 100%;
-  width: $chat-side-width;
-  background-color: $chat-side-color;
-  overflow: scroll;
-  float: left;
-}
-
-.side-header{
-  background-color: $side-head-color;
-  height: $chat-side-height;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  clear: both;
-  &__box{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    font-weight: bold;
-    color: $font-color;
-    text-decoration: none;
-    &__menu{
-      display: flex;
-    }
-  }
-}
-
-.contents__btn--icon{
-  color: $font-color;
-  margin-right: 5px;
-}
-
-.groups{
-  height: calc(100vh - #{$chat-side-height});
-  padding: 20px 20px 0;
-  overflow: scroll;
-}
-
-.group{
-  margin-bottom: 40px;
-  &__group-name{
-  font-size: 15px;
-  margin-bottom: 5px;
-  color: $font-color;
-  }
-  &__latest-message {
-    font-size: 11px;
     color:$font-color;
   }
 }
@@ -219,7 +112,34 @@ $form-height: 90px;
   padding: 46px 40px;
   background-color: #fafafa;
   overflow: scroll;
+  .message {
+    padding-bottom: 40px;
+    &__upper-info {
+      display: flex;
+      margin-bottom: 10px;
+      &__talker {
+        color: #333;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      &__date {
+        color: #999999;
+        font-size: 12px;
+        margin-left: 10px;
+      }
+    }
+    &__text {
+      color: #333;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .lower-message__content {
+      margin-bottom:10px;
+    }
+  }
 }
+
+
 .form{
   height: $form-height;
   padding: 20px 40px;
@@ -264,4 +184,4 @@ $form-height: 90px;
   background-color: #38aef0;
   color: $font-color;
   cursor: pointer;
-} 
+}
