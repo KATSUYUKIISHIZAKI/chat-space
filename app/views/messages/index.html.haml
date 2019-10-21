@@ -1,83 +1,23 @@
-.wrapper
-  .chat-side
-    .side-header
-      .side-header__box
-        %p.side-header__box__user-name 
-          =current_user.name
-        %ul.side-header__box__menu
-          %li.side-header__box__menu__new-group
-          = link_to new_group_path do
-            =fa_icon 'edit', class: "contents__btn--icon"
-          %li.side-header__box__menu__edit-user
-          = link_to edit_user_path(current_user) do
-            =fa_icon 'cog', class: "contents__btn--icon"
-    .groups
-      .group 
-        %p.group__group-name 
-          =@group.name
-        %p.group__latest-message
-          = @group.show_last_message
-  
-  .chat-main
-    .main-header
-      .main-header__left-box
-        %h2.main-header__left-box__current-group  
-          =@group.name
-        %ul.main-header__left-box__member-list 
-          = "Member :"
-          - @group.users.each do |user|
-            %li.main-header__left-box__member-list
-              = user.name
-      =link_to edit_group_path(@group), class: "main-header__edit-btn" do
+.side-content
+  = render partial: "layouts/side_bar"
+.main-content
+  .main-header
+    .main-box
+      .main-box__group-name
+        = @group.name
+      .main-box__member-list
+        - @group.users.each do |menber|
+          = menber.name
+    %label.main__edit-btn
+      = link_to edit_group_path(@group) do
         Edit
-    .messages
-      = render partial: 'message', collection: @messages
-    .form
-      = form_for [@group, @message], html: {class: "new_message", id: "new_message", name: "new_message" } do |f|
-        .input-box
-          = f.text_field :content, class: 'input-box__text', placeholder: 'type a message'       
-          = f.label :image, for: "message_image", class: 'input-box__image' do
-            = fa_icon 'picture-o', class: 'fa_image'
-            = f.file_field :image, class: 'input-box__image__file', id: "message_image", style: "display:none;"
-        = f.submit 'Send', class: 'submit-btn'
-
-    .side-header
-      .side-header__box
-        %p.side-header__box__user-name 
-          =current_user.name
-        %ul.side-header__box__menu
-          %li.side-header__box__menu__new-group
-          = link_to new_group_path do
-            =fa_icon 'edit', class: "contents__btn--icon"
-          %li.side-header__box__menu__edit-user
-          = link_to edit_user_path(current_user) do
-            =fa_icon 'cog', class: "contents__btn--icon"
-    .groups
-      .group 
-        %p.group__group-name 
-          =@group.name
-        %p.group__latest-message
-          = @group.show_last_message
-  
-  .chat-main
-    .main-header
-      .main-header__left-box
-        %h2.main-header__left-box__current-group  
-          =@group.name
-        %ul.main-header__left-box__member-list 
-          = "Member :"
-          - @group.users.each do |user|
-            %li.main-header__left-box__member-list
-              = user.name
-      =link_to edit_group_path(@group), class: "main-header__edit-btn" do
-        Edit
-    .messages
-      = render partial: 'message', collection: @messages
-    .form
-      = form_for [@group, @message], html: {class: "new_message", id: "new_message", name: "new_message" } do |f|
-        .input-box
-          = f.text_field :content, class: 'input-box__text', placeholder: 'type a message'       
-          = f.label :image, for: "message_image", class: 'input-box__image' do
-            = fa_icon 'picture-o', class: 'fa_image'
-            = f.file_field :image, class: 'input-box__image__file', id: "message_image", style: "display:none;"
-        = f.submit 'Send', class: 'submit-btn'
+  .messages
+    = render @messages
+  .form
+    .form__box
+      = form_for [@group, @message] do |f|
+        = f.text_field :content, class: 'message-box', placeholder: 'type a message'
+        = f.label :image, class: 'message-box__image' do
+          = fa_icon 'image', class: 'hidden'
+          = f.file_field :image, class: 'message-box__image__file'
+        = f.submit 'Send', class: 'send-btn'
