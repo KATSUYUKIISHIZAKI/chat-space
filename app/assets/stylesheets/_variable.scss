@@ -60,7 +60,7 @@ $form-height: 90px;
   }
   &__latest-message {
     font-size: 11px;
-    color:$font-color;
+    color: $font-color;
   }
 }
 
@@ -76,7 +76,7 @@ $form-height: 90px;
   padding: 0 40px;
   display: flex;
   justify-content: space-between;
-  border-bottom: solid 1px #eee;
+  border-bottom: solid 1px #eeeeee;
   overflow: scroll;
   &__left-box{
     margin-top: 35px;
