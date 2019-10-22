@@ -6,6 +6,7 @@
       .main-box__group-name
         = @group.name
       .main-box__member-list
+        = "Menber :"
         - @group.users.each do |menber|
           = menber.name
     %label.main__edit-btn
@@ -18,6 +19,6 @@
       = form_for [@group, @message] do |f|
         = f.text_field :content, class: 'message-box', placeholder: 'type a message'
         = f.label :image, class: 'message-box__image' do
-          = fa_icon 'image', class: 'hidden'
+          = fa_icon 'picture-o', class: 'fa_image'
           = f.file_field :image, class: 'message-box__image__file'
         = f.submit 'Send', class: 'send-btn'
